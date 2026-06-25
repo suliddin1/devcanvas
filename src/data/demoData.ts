@@ -7,7 +7,7 @@ export const demoData: PortfolioData = {
   email: "suliddin677@gmail.com",
   bio: "I design and build polished web interfaces with React, TypeScript, and careful attention to interaction details.",
   github: "https://github.com/suliddin1",
-  linkedin: "https://www.linkedin.com/in/suliddin-asadzade",
+  linkedin: "https://www.linkedin.com/in/suliddin-asadzada-a95649404/",
   website: "https://devcanvas-seven.vercel.app",
   skills: ["React", "TypeScript", "Tailwind CSS", "Next.js", "UI Engineering"],
   projects: [
