@@ -1,14 +1,14 @@
 import type { PortfolioData } from "../types";
 
 export const demoData: PortfolioData = {
-  name: "Ayan Mammadov",
+  name: "Suliddin Əsədzadə",
   role: "Frontend Developer",
   location: "Baku, Azerbaijan",
-  email: "ayan.dev@example.com",
+  email: "suliddin677@gmail.com",
   bio: "I design and build polished web interfaces with React, TypeScript, and careful attention to interaction details.",
-  github: "https://github.com/ayan-dev",
-  linkedin: "https://www.linkedin.com/in/ayan-dev",
-  website: "https://ayan.dev",
+  github: "https://github.com/suliddin1",
+  linkedin: "https://www.linkedin.com/in/suliddin-asadzade",
+  website: "https://devcanvas-seven.vercel.app",
   skills: ["React", "TypeScript", "Tailwind CSS", "Next.js", "UI Engineering"],
   projects: [
     {
