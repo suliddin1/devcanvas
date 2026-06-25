@@ -1,5 +1,6 @@
 import { designPresets } from "../data/designPresets";
 import type { PortfolioData } from "../types";
+import { getGmailComposeUrl, normalizeEmail } from "./contactLinks";
 
 function escapeHtml(value: string) {
   return value
@@ -16,6 +17,16 @@ function linkButton(label: string, href: string) {
   }
 
   return `<a class="button secondary" href="${escapeHtml(href)}" target="_blank" rel="noreferrer">${label}</a>`;
+}
+
+function gmailButton(className: string, label: string, email: string) {
+  const gmailComposeUrl = getGmailComposeUrl(email);
+
+  if (!gmailComposeUrl) {
+    return "";
+  }
+
+  return `<a class="${className}" href="${escapeHtml(gmailComposeUrl)}" target="_blank" rel="noreferrer" title="Open Gmail compose" aria-label="Open Gmail compose">${label}</a>`;
 }
 
 function decorativeCss(decorative: string) {
@@ -58,6 +69,7 @@ export function buildPortfolioHtml(data: PortfolioData) {
     data.designPreset === "soft-clay" ||
     data.designPreset === "aurora-dark";
   const isSingleColumnProjects = isEditorial;
+  const email = normalizeEmail(data.email);
   const skills = data.skills
     .map((skill) => `<span class="pill">${escapeHtml(skill)}</span>`)
     .join("");
@@ -243,13 +255,13 @@ export function buildPortfolioHtml(data: PortfolioData) {
       <p class="bio">${escapeHtml(data.bio)}</p>
       <div class="meta">
         <span>${escapeHtml(data.location)}</span>
-        <span>${escapeHtml(data.email)}</span>
+        ${email ? `<span>${escapeHtml(email)}</span>` : ""}
       </div>
       <div class="actions">
         ${linkButton("GitHub", data.github)}
         ${linkButton("LinkedIn", data.linkedin)}
         ${linkButton("Website", data.website)}
-        <a class="button primary" href="mailto:${escapeHtml(data.email)}">Email</a>
+        ${gmailButton("button primary", "Email", data.email)}
       </div>
     </section>
     <section class="stats">
@@ -273,7 +285,7 @@ export function buildPortfolioHtml(data: PortfolioData) {
       <h2>Let's build something refined.</h2>
       <p>Reach out for frontend projects, product interfaces, and polished portfolio work.</p>
       <div class="actions">
-        <a class="email-button" href="mailto:${escapeHtml(data.email)}">Email ${escapeHtml(data.name)}</a>
+        ${gmailButton("email-button", `Email ${escapeHtml(data.name)}`, data.email)}
         ${linkButton("GitHub", data.github)}
         ${linkButton("LinkedIn", data.linkedin)}
       </div>
