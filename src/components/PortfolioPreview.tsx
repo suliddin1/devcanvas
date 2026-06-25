@@ -11,6 +11,7 @@ import {
 import { designPresets } from "../data/designPresets";
 import type { PortfolioData } from "../types";
 import { cn } from "../utils/cn";
+import { getGmailComposeUrl, normalizeEmail } from "../utils/contactLinks";
 
 type PortfolioPreviewProps = {
   data: PortfolioData;
@@ -71,6 +72,8 @@ export function PortfolioPreview({ data }: PortfolioPreviewProps) {
   const isEditorial = data.designPreset === "editorial-serif";
   const isCyber =
     data.designPreset === "cyber-portfolio" || data.designPreset === "blueprint-grid";
+  const email = normalizeEmail(data.email);
+  const gmailComposeUrl = getGmailComposeUrl(data.email);
 
   return (
     <div
@@ -145,10 +148,12 @@ export function PortfolioPreview({ data }: PortfolioPreviewProps) {
               <MapPin className="h-4 w-4" />
               {data.location}
             </span>
-            <span className="inline-flex items-center gap-2">
-              <Mail className="h-4 w-4" />
-              {data.email}
-            </span>
+            {email ? (
+              <span className="inline-flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                {email}
+              </span>
+            ) : null}
           </div>
 
           <div className={cn("flex flex-wrap gap-2", isCenteredHero ? "justify-center" : "")}>
@@ -184,19 +189,25 @@ export function PortfolioPreview({ data }: PortfolioPreviewProps) {
                 LinkedIn
               </a>
             ) : null}
-            <a
-              href={`mailto:${data.email}`}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold transition hover:-translate-y-0.5"
-              style={{
-                borderRadius: preset.radius,
-                background: buttonBackground,
-                color: preset.buttonText,
-                boxShadow: isBrutal ? preset.shadow : "none",
-              }}
-            >
-              <Mail className="h-4 w-4" />
-              Email
-            </a>
+            {gmailComposeUrl ? (
+              <a
+                href={gmailComposeUrl}
+                target="_blank"
+                rel="noreferrer"
+                title="Open Gmail compose"
+                aria-label="Open Gmail compose"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold transition hover:-translate-y-0.5"
+                style={{
+                  borderRadius: preset.radius,
+                  background: buttonBackground,
+                  color: preset.buttonText,
+                  boxShadow: isBrutal ? preset.shadow : "none",
+                }}
+              >
+                <Mail className="h-4 w-4" />
+                Email
+              </a>
+            ) : null}
           </div>
         </motion.section>
 
@@ -395,18 +406,24 @@ export function PortfolioPreview({ data }: PortfolioPreviewProps) {
             Reach out for frontend projects, product interfaces, and polished portfolio work.
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
-            <a
-              href={`mailto:${data.email}`}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold"
-              style={{
-                borderRadius: preset.radius,
-                background: buttonBackground,
-                color: preset.buttonText,
-              }}
-            >
-              <Mail className="h-4 w-4" />
-              Email
-            </a>
+            {gmailComposeUrl ? (
+              <a
+                href={gmailComposeUrl}
+                target="_blank"
+                rel="noreferrer"
+                title="Open Gmail compose"
+                aria-label="Open Gmail compose"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold"
+                style={{
+                  borderRadius: preset.radius,
+                  background: buttonBackground,
+                  color: preset.buttonText,
+                }}
+              >
+                <Mail className="h-4 w-4" />
+                Email
+              </a>
+            ) : null}
             {data.website ? (
               <a
                 href={data.website}
